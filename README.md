@@ -53,7 +53,7 @@ apt get upgrade -y
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
 cd ~
-git clone [https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git](https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git)
+git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
 cd ~/Raspberry-Pi-Installer-Scripts
 ```
 
