@@ -99,7 +99,7 @@ sudo apt-get upgrade -y
 sudo apt install -y git python3-pip python3-venv
 ```
 
-### 2.5 Display Configuration 
+### 3. Display Configuration 
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
 cd ~
@@ -128,7 +128,7 @@ sudo python3 adafruit-pitft.py --display=24hat --rotation=90 --install-type=fbcp
 sudo reboot
 ```
 
-### 2.6 PiTFT Mode
+### 3.1 PiTFT Mode
 - FBCP (Framebuffer Copy)
     - Duplicates HDMI output
 - SPI (Serial Peripheral Interface): Enables data transfer between the microcontroller or Raspberry Pi to peripherals such as displays 
@@ -137,7 +137,7 @@ sudo reboot
 - when you want to use FBCP Mode, then your finished, otherwise continue with the next steps if you want to use SPI mode
 
   
-#### 2.7 Configure the SPI mode
+#### 3.2 Configure the SPI mode
 **Step 1**: Disable FBCP if enabled
 ```console
 sudo systemctl disable fbcp
@@ -162,4 +162,46 @@ sudo nano /boot/firmware/config.txt
 - delete this: dtoverlay=dwc2,dr_mode=host
 - check if spi is set to on: dtparam=spi=on
 
+### 4 Setup Python Virtual Environment und Initial SPI Test
+**Step 1**: Setup virtual environment
+- this is recommended to install python packages only for this development environment and not system-wide
+- also recommended to prevent interference between multiple python projects
+
+```console
+cd ~/pi-tangibles
+python3 -m venv venv
+source venv/bin/activate
+```
+
+- install adafruit related packages
+```console
+pip install adafruit-blinka adafruit-circuitpython-rgb-display pillow
+```
+
+- run this test script to check if spi ist setup correctly
+```python
+import board, busio, digitalio
+from adafruit_rgb_display import ili9341
+from PIL import Image, ImageDraw
+
+# --- TFT Setup ---
+cs_pin = digitalio.DigitalInOut(board.CE0)
+dc_pin = digitalio.DigitalInOut(board.D25)
+reset_pin = digitalio.DigitalInOut(board.D24)
+spi = board.SPI()
+
+disp = ili9341.ILI9341(
+    spi,
+    cs=cs_pin,
+    dc=dc_pin,
+    rst=reset_pin,
+    rotation=0,
+    baudrate=24000000
+)
+
+# Testbild
+image = Image.new("RGB", (disp.width, disp.height), (0, 0, 255))  # Blau
+disp.image(image)
+print("You should see a blue screen on your PiTFT.")
+```
 
