@@ -99,7 +99,7 @@ sudo apt-get upgrade -y
 sudo apt install -y git python3-pip python3-venv python3-dev python3-pil python3-numpy
 ```
 
-### 3. Display Configuration 
+## 3. Display Configuration 
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
 cd ~
@@ -162,7 +162,7 @@ sudo nano /boot/firmware/config.txt
 - delete this: dtoverlay=dwc2,dr_mode=host
 - check if spi is set to on: dtparam=spi=on
 
-### 4 Setup Python Virtual Environment und Initial SPI Test
+## 4. Setup Python Virtual Environment + Initial SPI Test
 **Step 1**: Setup virtual environment
 - this is recommended to install python packages only for this development environment and not system-wide
 - also recommended to prevent interference between multiple python projects
