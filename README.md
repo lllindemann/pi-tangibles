@@ -96,7 +96,7 @@ sudo apt-get upgrade -y
 ```
 **Step 2**: Install required software packages: Git, Pip3, Python-Venv
 ```console
-sudo apt install -y git python3-pip python3-venv
+sudo apt install -y git python3-pip python3-venv python3-dev python3-pil python3-numpy
 ```
 
 ### 3. Display Configuration 
