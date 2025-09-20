@@ -98,6 +98,7 @@ sudo python3 adafruit-pitft.py
 - select configuration: PiTFT 2.4" V2 resistive (240x320) (320x240)
 - select rotation: 90 degrees
 - select install type: setup PiTFT as desktop display (mirror)
+- reboot when installation is finished
 
 **Step 3**: Select mode (SPI or FBCP)
 - FBCP (Framebuffer Copy)
