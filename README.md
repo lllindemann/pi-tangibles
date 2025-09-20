@@ -53,17 +53,39 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
     - add a ssh session to: raspberrypi.local
     - connect with specified user and password
 
-### 2.3 Add additional Wifi Network (optional) 
-**Step 1**: open the wifi configuration file:
+### 2.3 Add additional Wifi Network or add fallback wifi (optional) NEEDS TESTING!
+**Step 1**: add another wifi network via nmcli
 ```console
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+sudo nmcli dev wifi connect "YOUR_SSID" password "YOUR_PASSWORD" ifname wlan0
 ```
-**Step 2**: add another network block for another wifi network
+
+**Step 2**: add a fallback wifi that is currently not available
 ```console
-network={
-    ssid="AnotherWifi"
-    psk="AnotherPassword"
-}
+sudo nmcli connection add type wifi ifname wlan0 con-name backup ssid "Raspberry Wifi"
+udo nmcli connection modify backup wifi-sec.key-mgmt wpa-psk wifi-sec.psk "r45p83rry"
+sudo nmcli connection modify backup wifi.hidden yes
+sudo nmcli connection modify backup connection.autoconnect-retries 0
+sudo nmcli connection reload
+```
+
+**Step 3**: set highest prio to fallback wifi
+```console
+sudo nmcli connection modify BackupWLAN connection.autoconnect-priority 10
+```
+
+**Step 4**: check your setup wifi
+```console
+nmcli connection show
+nmcli connection show backup
+```
+
+**Step 2**: show connections
+```console
+nmcli connection show
+```
+**Step 3**: inspect a specific connection
+```console
+sudo cat /etc/NetworkManager/system-connections/NETWORK_NAME.nmconnection
 ```
 
 ### 2.4 System Configuration 
