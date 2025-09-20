@@ -173,11 +173,12 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-- install adafruit related packages
+**Step 2**: install adafruit related packages
 ```console
 pip install adafruit-blinka adafruit-circuitpython-rgb-display pillow
 ```
 
+**Step 3**: SPI Test Script
 - run this test script to check if spi ist setup correctly
 ```python
 import board, busio, digitalio
