@@ -31,17 +31,27 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
 
 ## 2. Initial Technical Setup
 
-### SSH Connection 
+### Prepare SD Card for Pi Zero
 - Step 1: Flash Pi with [Raspberry PI Imager](https://www.raspberrypi.com/software/) on Pi SD-Card with the following settings:
-    - OS with GUI
-    - set default user & password 
-    - allow SSH
-- Step 2: Configure WiFi
-    - SD into Pi
-    - Boot Pi
-    - add WiFi
+    - Model: Raspberry Pi Zero
+    - OS:  Raspberry Pi OS Lite --> listed in "Raspberry Pi OS (other)"
+    - select your SD card
+- Step2: Add additional settings:
+    - continue BUT(!) add the following additional settings
+    - General: set default user & password
+    - General: add an wifi
+    - Services: allow SSH
+- Step 3: Flash the SD card with your settings
+
+### Setup Pi Zero 
+- Step 1: Install OS on Pi Zero
+    - Insert SD Card into Pi Zero
+    - Boot Pi Zero
+    - Pi Zero should connect to the added wifi network
 - Step 3: Connect to pi SSH 
-    - e.g. with Power Shell or Client like MobaXTerm 
+    - e.g. with Power Shell or Client like MobaXTerm
+    - add a ssh session to: raspberrypi.local
+    - connect with specified user and password
 
 ### System Configuration 
 Update System Components & Packages:
