@@ -99,7 +99,7 @@ sudo apt-get upgrade -y
 sudo apt install -y git python3-pip python3-venv python3-dev python3-pil python3-numpy
 ```
 
-### 3. Display Configuration 
+## 3. Display Configuration 
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
 cd ~
