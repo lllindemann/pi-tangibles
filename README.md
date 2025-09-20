@@ -122,37 +122,44 @@ sudo python3 adafruit-pitft.py
 - select install type: setup PiTFT as desktop display (mirror)
 - reboot when installation is finished
 
-**Step 3**: Select mode (SPI or FBCP)
-- FBCP (Framebuffer Copy)
-    - Duplicates HDMI output
-- SPI (Serial Peripheral Interface): Enables data transfer between the microcontroller or Raspberry Pi to peripherals such as displays 
-    - enables script-based rendering on the TFT display
-
-#### Configure the FBCP mode
-- Configure PiTFT display mode using the install script
-- 
-
+OR use these commands
 ```console
 sudo python3 adafruit-pitft.py --display=24hat --rotation=90 --install-type=fbcp
 sudo reboot
 ```
 
+### 2.6 PiTFT Mode
+- FBCP (Framebuffer Copy)
+    - Duplicates HDMI output
+- SPI (Serial Peripheral Interface): Enables data transfer between the microcontroller or Raspberry Pi to peripherals such as displays 
+    - enables script-based rendering on the TFT display
 
+- when you want to use FBCP Mode, then your finished, otherwise continue with the next steps if you want to use SPI mode
 
-#### Configure the SPI mode
-1. Disable FBCP if enabled
+  
+#### 2.7 Configure the SPI mode
+**Step 1**: Disable FBCP if enabled
 ```console
 sudo systemctl disable fbcp
 sudo systemctl stop fbcp
 ```
-2. Use Raspberry Config to enable SPI
+
+**Step 2**: Use Raspberry Config to enable SPI
 ```console
 sudo raspi-config
 ```
-
 - Interface Options → SPI → Enable
-
-3. Reboot
 ```console
 sudo reboot
 ```
+
+**Step 3**: Edit Boot Config
+```console
+sudo nano /boot/firmware/config.txt
+```
+- remove these dtoverlay related parameters
+- delete this: dtoverlay=pitft24rv2,rotate=90,fps=60,drm
+- delete this: dtoverlay=dwc2,dr_mode=host
+- check if spi is set to on: dtparam=spi=on
+
+
