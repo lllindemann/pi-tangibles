@@ -29,6 +29,13 @@ font = ImageFont.load_default()
 i2c = busio.I2C(board.SCL, board.SDA)
 mpu = adafruit_mpu6050.MPU6050(i2c)
 
+def solid_rect_rgb565(width, height, color):
+    r, g, b = color
+    rgb565 = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3)
+    high = (rgb565 >> 8) & 0xFF
+    low = rgb565 & 0xFF
+    return bytes([high, low] * (width * height))
+
 # --- Funktion: Accelerometer-Werte in Farbe umrechnen ---
 def color_from_accel(ax, ay, az, scale=3.0):
     # Empfindlicher: Werte zwischen -scale..+scale → 0..255
@@ -38,20 +45,21 @@ def color_from_accel(ax, ay, az, scale=3.0):
 
 # --- Hauptloop ---
 while True:
-    ax, ay, az = mpu.acceleration  # Beschleunigung in m/s²
+    ax, ay, az = mpu.acceleration
     color = color_from_accel(ax, ay, az)
 
-    # Bildschirm leeren (schneller: direkt Hintergrund schwarz füllen)
-    draw.rectangle((0, 0, disp.width, disp.height), fill=(0, 0, 0))
+    # Rechteck direkt als Block füllen
+    rect_bytes = solid_rect_rgb565(120, 160, color)
+    disp._block(60, 80, 179, 239, rect_bytes)
 
-    # draw rectangle 
-    draw.rectangle((60, 80, 180, 240), fill=color)
+    # Text via Pillow (kleiner Bereich reicht)
+    text_img = Image.new("RGB", (120, 60))
+    text_draw = ImageDraw.Draw(text_img)
+    text_draw.text((0, 0), f"Ax:{ax:.2f}", font=font, fill=(255, 255, 255))
+    text_draw.text((0, 20), f"Ay:{ay:.2f}", font=font, fill=(255, 255, 255))
+    text_draw.text((0, 40), f"Az:{az:.2f}", font=font, fill=(255, 255, 255))
 
-    # show acc values
-    draw.text((10, 10), f"Ax:{ax:.2f}", font=font, fill=(255, 255, 255))
-    draw.text((10, 30), f"Ay:{ay:.2f}", font=font, fill=(255, 255, 255))
-    draw.text((10, 50), f"Az:{az:.2f}", font=font, fill=(255, 255, 255))
+    # auf Display (kleine Region)
+    disp.image(text_img, x=10, y=10)
 
-    # update display
-    disp.image(image)
-    time.sleep(0.01)
+    time.sleep(0.03)  # ~30 FPS

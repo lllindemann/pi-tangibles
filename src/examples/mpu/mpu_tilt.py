@@ -32,7 +32,6 @@ while True:
     # compute ROLL and PITCH with acc values
     roll = math.degrees(math.atan2(ay, az))
     pitch = math.degrees(math.atan2(-ax, math.sqrt(ay*ay + az*az)))
-
     # TODO: compute yaw 
 
     # render black background (rectangle with full display size)
