@@ -53,12 +53,32 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
     - add a ssh session to: raspberrypi.local
     - connect with specified user and password
 
+### ooptional: add another wifi network
+open the wifi configuration file:
+```console
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+add another network block for another wifi network
+```console
+network={
+    ssid="AnotherWifi"
+    psk="AnotherPassword"
+}
+```
+
 ### System Configuration 
 Update System Components & Packages:
 ```console
-apt get update
-apt get upgrade -y
+sudo apt-get update
+sudo apt-get upgrade -y
 ```
+Install required software packages: Git, Pip3, Python-Venv
+```console
+sudo apt install -y git python3-pip python3-venv
+```
+
+
+
 ### Display Configuration 
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
@@ -69,8 +89,8 @@ cd ~/Raspberry-Pi-Installer-Scripts
 
 **Step 2**: Install the Adafruit library to run the configuration script
 ```console
-cd ~
 sudo pip3 install adafruit-python-shell --break-system-packages
+sudo pip3 install click --break-system-packages
 ```
 
 **Step 3**: Select mode (SPI or FBCP)
@@ -80,11 +100,18 @@ sudo pip3 install adafruit-python-shell --break-system-packages
     - enables script-based rendering on the TFT display
 
 #### Configure the FBCP mode
-- Configure PiTFT display mode using the install script 
+- Configure PiTFT display mode using the install script
+- 
 
 ```console
-sudo python3 adafruit-pitft.py --display=24hat --rotation=90 --install-type=fbcpsudo Reboot
+sudo python3 adafruit-pitft.py --display=24hat --rotation=90 --install-type=fbcp
+sudo reboot
 ```
+
+- select configuration: PiTFT 2.4" V2 resistive (240x320) (320x240)
+- select rotation: 90 degrees
+- select install type: setup PiTFT as desktop display (mirror)
+
 #### Configure the SPI mode
 1. Disable FBCP if enabled
 ```console
