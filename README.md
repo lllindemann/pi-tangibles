@@ -31,7 +31,7 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
 
 ## 2. Initial Technical Setup
 
-### Prepare SD Card for Pi Zero
+### 2.1 Prepare SD Card for Pi Zero
 - Step 1: Flash Pi with [Raspberry PI Imager](https://www.raspberrypi.com/software/) on Pi SD-Card with the following settings:
     - Model: Raspberry Pi Zero
     - OS:  Raspberry Pi OS Lite --> listed in "Raspberry Pi OS (other)"
@@ -43,7 +43,7 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
     - Services: allow SSH
 - Step 3: Flash the SD card with your settings
 
-### Setup Pi Zero 
+### 2.2 Setup Pi Zero 
 - Step 1: Install OS on Pi Zero
     - Insert SD Card into Pi Zero
     - Boot Pi Zero
@@ -53,12 +53,12 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
     - add a ssh session to: raspberrypi.local
     - connect with specified user and password
 
-### ooptional: add another wifi network
-open the wifi configuration file:
+### 2.3 Add additional Wifi Network (optional) 
+**Step 1**: open the wifi configuration file:
 ```console
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
-add another network block for another wifi network
+**Step 2**: add another network block for another wifi network
 ```console
 network={
     ssid="AnotherWifi"
@@ -66,20 +66,18 @@ network={
 }
 ```
 
-### System Configuration 
-Update System Components & Packages:
+### 2.4 System Configuration 
+**Step 1**: Update System Components & Packages:
 ```console
 sudo apt-get update
 sudo apt-get upgrade -y
 ```
-Install required software packages: Git, Pip3, Python-Venv
+**Step 2**: Install required software packages: Git, Pip3, Python-Venv
 ```console
 sudo apt install -y git python3-pip python3-venv
 ```
 
-
-
-### Display Configuration 
+### 2.5 Display Configuration 
 **Step 1**: Clone Git Repo with Installer Scripts for TFT Display
 ```console
 cd ~
@@ -92,6 +90,14 @@ cd ~/Raspberry-Pi-Installer-Scripts
 sudo pip3 install adafruit-python-shell --break-system-packages
 sudo pip3 install click --break-system-packages
 ```
+
+**Step 3**: Install PiTFT Driver
+```console
+sudo python3 adafruit-pitft.py
+```
+- select configuration: PiTFT 2.4" V2 resistive (240x320) (320x240)
+- select rotation: 90 degrees
+- select install type: setup PiTFT as desktop display (mirror)
 
 **Step 3**: Select mode (SPI or FBCP)
 - FBCP (Framebuffer Copy)
@@ -108,9 +114,7 @@ sudo python3 adafruit-pitft.py --display=24hat --rotation=90 --install-type=fbcp
 sudo reboot
 ```
 
-- select configuration: PiTFT 2.4" V2 resistive (240x320) (320x240)
-- select rotation: 90 degrees
-- select install type: setup PiTFT as desktop display (mirror)
+
 
 #### Configure the SPI mode
 1. Disable FBCP if enabled
