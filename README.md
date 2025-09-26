@@ -48,7 +48,7 @@ The hardware is based on a Raspberry Pi in a 3D-printed plastic case with integr
     - Insert SD Card into Pi Zero
     - Boot Pi Zero
     - Pi Zero should connect to the added wifi network
-- Step 3: Connect to pi SSH 
+- Step 2: Connect to pi SSH 
     - e.g. with Power Shell or Client like MobaXTerm
     - add a ssh session to: raspberrypi.local
     - connect with specified user and password
